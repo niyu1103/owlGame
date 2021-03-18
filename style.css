@@ -1,0 +1,22 @@
+.canvas_wrap {
+	background: url(./img/back.png);
+	background-size: contain;
+	position: relative;
+	width: 100vw;
+}
+
+.canvas_wrap::after {
+	background: url(./img/moon.png);
+	content: "";
+	height: 128px;
+	position: absolute;
+	right: 100px;
+	top: 50px;
+	width: 128px;
+}
+#canvas {
+	background: url(./img/grass.png) repeat-x;
+	background-position-y: 350px;
+	background-size: contain;
+	width: 100%;
+}
