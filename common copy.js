@@ -32,21 +32,23 @@ function drawImageActualSize() {
 //   input_key_buffer[e.keyCode] = false;
 // }
 
-
 window.onkeydown = (event) => {
-
   if (event.code === "ArrowRight") {
     console.log("右が押された");
-    fukurou1.x = fukurou1.x + 10;
+    fukurou1.walk(event.code);
 
   } else if (event.code === "ArrowLeft") {
     console.log("左が押された");
-    fukurou1.x = fukurou1.x - 10;
-  } else if (event.code === "ArrowUp"){
+    fukurou1.walk(event.code);
+
+  }
+}
+
+window.onkeyup = (event) => {
+
+  if (event.code === "ArrowUp") {
     console.log("上が押された");
     // fukurou1.y = fukurou1.y - 60;
-    fukurou1.jumpFlag = true;
-    fukurou1.vy = -10;
     fukurou1.jump();
   }
 };
@@ -65,6 +67,8 @@ class Fukurou {
     this.jumpFlag = false;
     this.column = 0;
     this.row = 0;
+    this.frameCount = 0;
+    // this.directions = 'up';
     // let hoge='hello';
 
   }
@@ -85,51 +89,46 @@ class Fukurou {
   }
 
   jump() {
-
-    // if (input_key_buffer[39]) {
-    //   this.x = this.x + 10;
-    //   if (this.x % 5 === 0) {
-    //     column = column + 1;
-    //     if (column > 1) {
-    //       column = 0;
-    //     }
-    //   }
-
-    // } else if (input_key_buffer[37]) {
-    //   this.x = this.x - 10;
-    //   if (this.x % 5 === 0) {
-    //     column = column + 1;
-    //     if (column > 1) {
-    //       column = 0;
-    //     }
-    //   }
-    //   console.log('column:' + column);
-    // } else if (input_key_buffer[38]) {
-    //   this.vy = -7;
-    //   this.jumpFlag = true;
-    //   column = column + 1;
-    //   if (column > 3) {
-    //     column = 0;
-    //   }
-    // }
-
-    if (this.jumpFlag) {
-      // 上下方向は速度分をたす
-      this.y = this.y + this.vy;
-
-      // 落下速度はだんだん大きくなる
-      this.vy = this.vy + 0.5;
+    if(this.jumpFlag){
+      return;
     }
+    this.jumpFlag = true;
+    this.vy = -21;
+    this.column = 2;
+    console.log("jump");
 
-
-    if (this.y + 53 > 353) {
-      this.y = 353 - 53;
-    }
   }
 
   update() {
-    if (this.jumpFlag){
-      this.jump();
+    this.frameCount += 1;
+    if (this.jumpFlag) {
+      //   this.jump();
+      if (this.frameCount > 8) {
+
+        if (this.column === 2) {
+          this.column = 3;
+        } else if(this.column === 3){
+          this.column = 2;
+        }
+        this.frameCount = 0;
+      }
+      this.y = this.y + this.vy;
+      this.vy = this.vy + 1.2;
+      if (this.y > 300) {
+        this.y = 300;
+        this.jumpFlag = false;
+      }
+
+    } else {
+      if (this.frameCount>8){
+        this.column = this.column + 1;
+        if (this.column > 1) {
+          this.column = 0;
+        }
+        this.frameCount =0;
+      }
+
+
     }
     this.draw();
   }
@@ -137,6 +136,19 @@ class Fukurou {
   displayPosition() {
     console.log(this.x)
     console.log(hoge)
+
+  }
+
+
+  walk(code) {
+    if (code === "ArrowRight") {
+      this.x = this.x + 10;
+
+    }
+    if (code === "ArrowLeft") {
+      this.x = this.x - 10;
+
+    }
 
   }
 }

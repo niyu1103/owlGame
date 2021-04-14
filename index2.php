@@ -34,14 +34,12 @@
 						curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'GET');
 						curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 						$response = curl_exec($curl);
-							Var_dump($response);
 						curl_close($curl);
 						if($response){
 							$instagram = json_decode($response);
 							if(isset($instagram->error)){
 								$instagram = null;
 							}
-							Var_dump($instagram);
 						}
 					?>
 					<?php
@@ -182,7 +180,6 @@
 				curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'GET');
 				curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 				$response = curl_exec($curl);
-			  var_dump($response);
 				curl_close($curl);
 				if($response){
 					$instagram = json_decode($response);
@@ -190,7 +187,6 @@
 						$instagram = null;
 					}
 				}
-				var_dump($instagram);
 			?>
 			<ul class="galleryList">
 				<?php
